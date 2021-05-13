@@ -1,0 +1,24 @@
+server:
+  port: 8039
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/security-demo1?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+#mybatisplus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml
+
+#jwt配置
+jwt:
+  tokenHeader: Authorization
+  secret: cwblog
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenStart: Bearer  #JWT负载中拿到开头
+

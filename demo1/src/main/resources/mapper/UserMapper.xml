@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ink.cwblog.demo1.dao.UserMapper">
+
+<resultMap id="userDetailMap" type="ink.cwblog.demo1.dto.UserDto" >
+    <id column="id" property="id" />
+    <result column="tel" property="tel" />
+    <result column="status" property="status" />
+    <result column="name" property="name" />
+    <collection property="roles" ofType="ink.cwblog.demo1.pojo.Role" >
+        <id column="roleId" property="id" />
+        <result column="roleName" property="name" />
+        <result column="roleStatus" property="status" />
+    </collection>
+</resultMap>
+
+<select id="queryUserDetailById" resultMap="userDetailMap">
+    SELECT
+        t1.id,
+        t1.`name`,
+        t1.tel,
+        t1.`status`,
+        t3.id as roleId,
+        t3.`name` as roleName,
+        t3.`status` as roleStatus
+    FROM
+        `user` t1
+        LEFT JOIN user_role_link t2 ON t1.id = t2.user_id
+        LEFT JOIN role t3 ON t2.role_id = t3.id
+    WHERE
+        t1.id = #{userId,jdbcType=INTEGER} AND
+        t3.`status` = 0 AND
+        ISNULL(t1.delete_time) AND
+        ISNULL(t3.delete_time)
+</select>
+
+
+<resultMap id="userListMap" type="ink.cwblog.demo1.http.res.QueryUserRes" >
+    <id column="id" property="id" />
+    <result column="tel" property="tel" />
+    <result column="status" property="status" />
+    <result column="name" property="name" />
+    <collection property="roles" ofType="ink.cwblog.demo1.pojo.Role" >
+        <id column="roleId" property="id" />
+        <result column="roleName" property="name" />
+        <result column="roleStatus" property="status" />
+    </collection>
+</resultMap>
+
+<select id="queryUserList" resultMap="userListMap">
+ SELECT
+        t1.id,
+        t1.`name`,
+        t1.tel,
+        t1.`status`,
+        t3.id as roleId,
+        t3.`name` as roleName,
+        t3.`status` as roleStatus
+    FROM
+        `user` t1
+        LEFT JOIN user_role_link t2 ON t1.id = t2.user_id
+        LEFT JOIN role t3 ON t2.role_id = t3.id
+    WHERE
+        t3.`status` = 0 AND
+        ISNULL(t1.delete_time) AND
+        ISNULL(t3.delete_time)
+    <if test="ew.filterType !=null ">
+        AND t1.`name` like concat (%,#{ew.filterValue},%)
+    </if>
+</select>
+
+
+
+</mapper>
