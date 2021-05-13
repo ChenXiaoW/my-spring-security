@@ -62,4 +62,5 @@ public class UserController {
     public Response<QueryUserRes> queryUserDetail(){
         return Response.success(null);
     }
+
 }
