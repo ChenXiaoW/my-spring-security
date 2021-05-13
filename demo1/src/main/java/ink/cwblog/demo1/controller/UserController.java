@@ -8,6 +8,7 @@ import ink.cwblog.demo1.http.res.QueryUserRes;
 import ink.cwblog.demo1.service.UserService;
 import ink.cwblog.demo1.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,6 +49,7 @@ public class UserController {
      * @param req
      * @return
      */
+    @PreAuthorize("hasAnyRole('admin')")
     @GetMapping("/list")
     public Response<IPage<QueryUserRes>> queryUserList(@Valid @RequestParam ListQuery req){
         return Response.success(userService.queryUserList(req));
