@@ -1,5 +1,6 @@
 package ink.cwblog.demo1.vo;
 
+import ink.cwblog.demo1.exception.BusinessException;
 import lombok.Data;
 
 /**
@@ -27,6 +28,18 @@ public class Response<T> {
 
     public static <T> Response<T> unauthorized(String msg) {
         return new Response<>(ClientError.UNAUTHORIZED.getCode(), msg, null);
+    }
+
+    public static <T> Response<T> fail(ResultCode resultCode) {
+        return new Response<>(resultCode.getCode(), resultCode.getMsg(),null);
+    }
+
+    public static <T> Response<T> fail(ResultCode resultCode, String msg) {
+        return new Response<>(resultCode.getCode(), msg, null);
+    }
+
+    public static <T> Response<T> fail(BusinessException e) {
+        return new Response<>(e.getCode(),e.getMessage(),null);
     }
 
 }

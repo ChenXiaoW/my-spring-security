@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 认证信息
@@ -29,7 +28,7 @@ public class UserDetailDto implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         for (int i = 0 ;i < userDto.getRoles().size() ; i++) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + userDto.getRoles().get(i)));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+userDto.getRoles().get(i).getName()));
         }
         return authorities;
     }

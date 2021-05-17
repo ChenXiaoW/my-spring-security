@@ -38,4 +38,11 @@ public interface UserMapper extends BaseMapper<User> {
      */
     IPage<QueryUserRes> queryUserList(Page<QueryUserRes> page, @Param(Constants.WRAPPER)ListQuery req);
 
+    /**
+     * 查询用户信息
+     * @param userId
+     * @return
+     */
+    QueryUserRes queryUserDetail(Integer userId);
+
 }

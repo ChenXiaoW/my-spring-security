@@ -1,7 +1,9 @@
 package ink.cwblog.demo1.config;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ink.cwblog.demo1.dao.UserMapper;
 import ink.cwblog.demo1.dto.UserDetailDto;
 import ink.cwblog.demo1.dto.UserDto;
@@ -24,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * jwt

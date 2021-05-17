@@ -66,7 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String login(LoginReq req) {
         User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getTel, req.getTel()).isNull(User::getDeleteTime));
-        if (ObjectUtils.isNotEmpty(user)){
+        if (ObjectUtils.isEmpty(user)){
             throw new BusinessException("用户手机号错误");
         }
         if (!passwordEncoder.matches(req.getPassword(),user.getPassword())){
@@ -86,5 +86,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public IPage<QueryUserRes> queryUserList(ListQuery req) {
         Page<QueryUserRes> page = new Page<>(req.getPageNum(),req.getPageSize());
         return userMapper.queryUserList(page,req);
+    }
+
+    /**
+     * 查询用户详情
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public QueryUserRes queryUserDetail(Integer userId) {
+        return userMapper.queryUserDetail(1);
     }
 }
