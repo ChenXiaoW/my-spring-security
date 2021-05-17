@@ -1,6 +1,8 @@
 package ink.cwblog.demo1.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import ink.cwblog.demo1.dto.UserDetailDto;
 import ink.cwblog.demo1.http.ListQuery;
 import ink.cwblog.demo1.http.req.LoginReq;
 import ink.cwblog.demo1.http.req.RegisterUserReq;
@@ -8,6 +10,9 @@ import ink.cwblog.demo1.http.res.QueryUserRes;
 import ink.cwblog.demo1.service.UserService;
 import ink.cwblog.demo1.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,19 +53,20 @@ public class UserController {
      * @param req
      * @return
      */
+    @PreAuthorize("hasAnyRole('admin')")
     @GetMapping("/list")
-    public Response<IPage<QueryUserRes>> queryUserList(@Valid @RequestParam ListQuery req){
+    public Response<IPage<QueryUserRes>> queryUserList(@Valid @ModelAttribute ListQuery req){
         return Response.success(userService.queryUserList(req));
     }
 
-    //TODO 未完成 by chenw 2021/05/13
     /**
      * 查询用户信息
      * @return
      */
+    @PreAuthorize("hasAnyRole('admin','user')")
     @GetMapping("/detail")
-    public Response<QueryUserRes> queryUserDetail(){
-        return Response.success(null);
+    public Response<QueryUserRes> queryUserDetail(@AuthenticationPrincipal UserDetailDto userDetailDto){
+        return Response.success(userService.queryUserDetail(userDetailDto.getId()));
     }
 
 }

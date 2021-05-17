@@ -60,9 +60,7 @@ public class JwtUtil {
     }
 
     private Claims getClaimsFromToken(String token) {
-        Claims claims = null;
-        claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        return claims;
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     /**
@@ -73,7 +71,7 @@ public class JwtUtil {
      */
     public boolean validateToken(String token, Integer userId) {
         String id = getIdFromToken(token);
-        return id.equals(userId) && !isTokenExpired(token);
+        return id.equals(userId.toString()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

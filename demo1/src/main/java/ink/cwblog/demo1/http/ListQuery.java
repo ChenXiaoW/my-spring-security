@@ -3,6 +3,7 @@ package ink.cwblog.demo1.http;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author daihaoran
@@ -12,13 +13,13 @@ public class ListQuery {
     /**
      * 每页大小
      */
-    @NotBlank
+    @NotNull
     protected Integer pageSize;
 
     /**
      * 当前页
      */
-    @NotBlank
+    @NotNull
     protected Integer pageNum;
 
     /**

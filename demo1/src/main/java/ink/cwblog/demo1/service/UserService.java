@@ -42,8 +42,9 @@ public interface UserService extends IService<User> {
     /**
      * 查询用户详情
      *
+     * @param userId
      * @return
      */
-    QueryUserRes queryUserDetail();
+    QueryUserRes queryUserDetail(Integer userId);
 
 }

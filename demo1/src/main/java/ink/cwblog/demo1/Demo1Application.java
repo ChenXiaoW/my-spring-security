@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@MapperScan(value = {"ink.cwblog.demo1.dao"})
+@MapperScan(value = "ink.cwblog.demo1.dao")
 @SpringBootApplication
 public class Demo1Application {
 
