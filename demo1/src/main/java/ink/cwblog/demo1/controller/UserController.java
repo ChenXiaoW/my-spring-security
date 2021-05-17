@@ -2,6 +2,7 @@ package ink.cwblog.demo1.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import ink.cwblog.demo1.dto.UserDetailDto;
 import ink.cwblog.demo1.http.ListQuery;
 import ink.cwblog.demo1.http.req.LoginReq;
 import ink.cwblog.demo1.http.req.RegisterUserReq;
@@ -10,6 +11,7 @@ import ink.cwblog.demo1.service.UserService;
 import ink.cwblog.demo1.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,9 +65,8 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('admin','user')")
     @GetMapping("/detail")
-    public Response<QueryUserRes> queryUserDetail(){
-        System.out.println(JSON.toJSONString(SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-        return Response.success(userService.queryUserDetail(1));
+    public Response<QueryUserRes> queryUserDetail(@AuthenticationPrincipal UserDetailDto userDetailDto){
+        return Response.success(userService.queryUserDetail(userDetailDto.getId()));
     }
 
 }
